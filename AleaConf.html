@@ -17,6 +17,7 @@
     <script src="asset/js/anime.min.js"></script>
     <script src="asset/js/all.min.js"></script>
     <script src="asset/js/amazelogo.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script> <!--QR code script-->
     <style>
         #logoMazePetit {
             height: 60px;
@@ -88,6 +89,7 @@
                 </div>
             </header>
             <script>
+                let currentUrlConf = ""
                 let mlPetit = new amazelogo({
                     'idCont': 'logoMazePetit',
                     'colorLettre': '#e52414',
@@ -101,10 +103,33 @@
                 d3.json("asset/js/confsInfos.js")
                     .then(data => {
                         confs = data;
+                        console.log(confs);
+                        let conf = confs[Math.floor(Math.random()*confs.length)];
+                        let urlFirstSlide = conf.urlSlide+'?diapo=0';
+                        showDiapo(urlFirstSlide);
+
+                        //createQRCode(urlFirstSlide)
                     });
 
-
                 d3.select('#btnNewAlea').on('click',newAlea);
+
+                function createQRCode(urlQRCode){
+                    let qrcode = document.getElementById("qrcodeDiv");  //geDiv QRCode
+                    qrcode.innerHTML = '<div id="qrcode" style="position:fixed;right:0;bottom:0;"><input id="confLink" class="form-control" type="button" value="Lien vers la conférence complète"></div>'
+                    document.getElementById("confLink").onclick = function(){
+                        window.open(
+                            urlQRCode,
+                            "_blank"
+                        );
+                    }
+                    new QRCode("qrcode", urlQRCode);
+                    currentUrlConf = urlQRCode
+                    console.log("ICI")
+                }
+
+                function clearQRCode(){
+                    document.getElementById("qrcodeDiv").innerHTML = ""
+                }
 
                 function newAlea(){
                     let svg = d3.select("#svgLoad"), diapo, url, conf = confs[Math.floor(Math.random()*confs.length)];
@@ -130,11 +155,16 @@
                         showDiapo(conf.urlSlide+'?diapo='+Math.floor(Math.random()*conf.diapos.length));
                     }
                     */
-                    showDiapo(conf.urlSlide+'?diapo='+Math.floor(Math.random()*conf.diapos.length));
+                    let urlConf = conf.urlSlide+'?diapo='+Math.floor(Math.random()*conf.diapos.length);
+                    showDiapo(urlConf);
+                    //clearQRCode()
+                    //createQRCode(urlConf)
 
                 }
                 function showDiapo(url){
                     console.log(url);
+                    clearQRCode()
+                    createQRCode(url)
                     d3.select('#aleaDiapo').attr('src',url);
                 }
 
@@ -144,7 +174,12 @@
 
             <div class="container text-center">
                 <div class="row">
-                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">
+                        <div id="qrcodeDiv"></div>
+                        <!-- <div id="qrcode" style="position:fixed;right:0;bottom:0;">
+                            <input id="confLink" class="form-control" type="button" value="Lien vers la conférence complète">
+                        </div> -->
+                    </div>
                     <div class="col-sm-8 bg-white">
                         <iframe id="aleaDiapo" frameBorder="0"></iframe>
                     </div>
