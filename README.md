@@ -1,5 +1,7 @@
 # ChaoticumSeminario
 
+Lien de l'application: https://krylex0.github.io/ChaoticumSeminario/AleaConf.html
+
 ## Affichage au chargement de la page
 
 Lorsque la page est chargé, afin de ne pas afficher une grande page blanche, la 1ère page d'une conférence aléatoire est affiché. Cette action est réalisé en lançant la fonction "showDiapo(urlConf)" directement.
