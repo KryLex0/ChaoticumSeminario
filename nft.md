@@ -1,2 +1,8 @@
+## Utilisation de NFT
+
 Une utilisation des NFT pourrait être pour les billets. Que ce soit des billets de concerts, ou encore des tickets de transports.
-L'utilité serait de lutter contre les fraudes afin d'avoir un ticket/billet certifié et qui ne soit pas falsifié.
+
+### Utilité
+- Lutter contre les fraudes
+- Certification des tickets/billets
+- Digitalisation des tickets/billets
